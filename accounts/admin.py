@@ -3,7 +3,7 @@ from accounts.models import *
 
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ['user', 'phoneNumber', 'regNo', 'national_id', 'school', 'department']
+    list_display = ['user',  'regNo', 'phoneNumber', 'national_id', 'school', 'department']
 
     class Meta:
         model = Profile
