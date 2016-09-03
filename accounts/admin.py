@@ -3,7 +3,7 @@ from accounts.models import *
 
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ['user',  'regNo', 'phoneNumber', 'national_id', 'school', 'department']
+    list_display = ['user',  'regNo', 'phoneNumber', 'national_id', 'school', 'department', 'course']
 
     class Meta:
         model = Profile
@@ -16,3 +16,28 @@ class IdApplicationAdmin(admin.ModelAdmin):
     class Meta:
         model = IdApplication
 admin.site.register(IdApplication, IdApplicationAdmin)
+
+
+class SchoolAdmin(admin.ModelAdmin):
+    list_display = ['school_name']
+
+    class Meta:
+        model = School
+admin.site.register(School, SchoolAdmin)
+
+
+class DepartmentAdmin(admin.ModelAdmin):
+    list_display = ['department_name']
+
+    class Meta:
+        model = Department
+admin.site.register(Department, DepartmentAdmin)
+
+
+class CourseAdmin(admin.ModelAdmin):
+    list_display = ['department', 'course_name']
+
+    class Meta:
+        model = Course
+admin.site.register(Course, CourseAdmin)
+

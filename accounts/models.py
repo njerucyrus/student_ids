@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 
 class School(models.Model):
-    school_name = models.CharField(max_length=50)
+    school_name = models.CharField(max_length=128)
 
     def __unicode__(self):
         return self.school_name
@@ -13,10 +13,18 @@ class School(models.Model):
 
 class Department(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE)
-    department_name = models.CharField(max_length=32)
+    department_name = models.CharField(max_length=128)
 
     def __unicode__(self):
         return self.department_name
+
+
+class Course(models.Model):
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    course_name = models.CharField(max_length=128)
+
+    def __unicode__(self):
+        return self.course_name
 
 
 class Profile(models.Model):
@@ -26,6 +34,9 @@ class Profile(models.Model):
     national_id = models.PositiveIntegerField()
     school = models.ForeignKey(School)
     department = models.ForeignKey(Department)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+
+
 
     def __unicode__(self):
         return self.regNo

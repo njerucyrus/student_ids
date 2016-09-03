@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block content %}
+
+    <form action="" method="post">
+        {{ profile_form.as_p }}
+        {{ user_form.as_p }}
+        {% csrf_token %}
+        <input type="submit" value="create account">
+    </form>
+{% endblock %}
