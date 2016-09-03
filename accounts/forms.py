@@ -32,4 +32,9 @@ class StudentProfileForm(forms.ModelForm):
 class ApplyIdForm(forms.ModelForm):
     class Meta:
         model = IdApplication
-        exclude = ('paid', 'date_applied', )
+        exclude = ('user', 'paid', 'date_applied', )
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=32)
+    password = forms.CharField(max_length=128, widget=forms.PasswordInput)
