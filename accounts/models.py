@@ -36,10 +36,18 @@ class IdApplication(models.Model):
     regNo = models.CharField(max_length=32)
     full_name = models.CharField(max_length=100)
     passport = models.ImageField(upload_to="img/passports")
+
+    APPL_TYPE = (
+        ('F', 'First Time'),
+        ('R', 'Replacement'),
+    )
+
+    application_type = models.CharField(max_length=32, choices=APPL_TYPE, default=APPL_TYPE[0][0])
     paid = models.BooleanField(default=False)
     date_applied = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
         return self.regNo
+
 
 
