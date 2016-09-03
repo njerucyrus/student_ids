@@ -36,16 +36,12 @@ class Profile(models.Model):
     department = models.ForeignKey(Department)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
 
-
-
     def __unicode__(self):
         return self.regNo
 
 
 class IdApplication(models.Model):
     user = models.OneToOneField(User)
-    regNo = models.CharField(max_length=32)
-    full_name = models.CharField(max_length=100)
     passport = models.ImageField(upload_to="img/passports")
 
     APPL_TYPE = (

@@ -11,7 +11,7 @@ admin.site.register(Profile, ProfileAdmin)
 
 
 class IdApplicationAdmin(admin.ModelAdmin):
-    list_display = ['user', 'regNo', 'full_name', 'paid', 'date_applied']
+    list_display = ['user', 'paid', 'date_applied']
 
     class Meta:
         model = IdApplication

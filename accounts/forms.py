@@ -32,4 +32,4 @@ class StudentProfileForm(forms.ModelForm):
 class ApplyIdForm(forms.ModelForm):
     class Meta:
         model = IdApplication
-        exclude = ('user', 'paid', 'date_applied', )
+        exclude = ('paid', 'date_applied', )

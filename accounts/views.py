@@ -41,4 +41,19 @@ def create_account(request):
                                                    })
 
 
+def apply_id(request):
+    if request.method == 'POST':
+        form = ApplyIdForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponse('application was successful')
+    else:
+        form = ApplyIdForm()
+    return render(request, 'apply_id.html' , {'form': form, })
+
+
+
+
+
+
 
