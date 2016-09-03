@@ -56,10 +56,7 @@ ROOT_URLCONF = 'student_ids.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(PROJECT_PATH, 'accounts', 'templates'),
-
-            ],
+        'DIRS': [os.path.join(PROJECT_PATH, 'accounts', 'templates'), ],
 
         'APP_DIRS': True,
         'OPTIONS': {
