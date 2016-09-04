@@ -1,5 +1,5 @@
 from django.contrib import admin
-from payments.models import Payment
+from payments.models import Payment, StudentIdFee
 
 
 class PaymentAdmin(admin.ModelAdmin):
@@ -14,3 +14,12 @@ class PaymentAdmin(admin.ModelAdmin):
     class Meta:
         model = Payment
 admin.site.register(Payment, PaymentAdmin)
+
+
+class StudentIdFeeAdmin(admin.ModelAdmin):
+    list_display = ['id_fee']
+
+    class Meta:
+        model = StudentIdFee
+admin.site.register(StudentIdFee, StudentIdFeeAdmin)
+

@@ -3,6 +3,13 @@ from django.db import models
 from accounts.models import Profile
 
 
+class StudentIdFee(models.Model):
+    id_fee = models.DecimalField("ID Fee (Ksh)", max_digits=10, decimal_places=2)
+
+    def __unicode__(self):
+        return str(self.id_fee)
+
+
 class Payment(models.Model):
     transaction_id = models.CharField(max_length=128)
     phoneNumber = models.CharField(max_length=13)
