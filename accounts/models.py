@@ -54,7 +54,7 @@ class IdApplication(models.Model):
     date_applied = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
-        return self.regNo
+        return str(self.user)
 
 
 

@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from accounts.forms import  *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from payments.models import Payment
 
 
 def index(request):
@@ -86,24 +87,36 @@ def create_account(request):
 
 @login_required(login_url="/login/")
 def apply_id(request):
+
     if request.method == 'POST':
         form = ApplyIdForm(request.POST, request.FILES)
         if form.is_valid():
             try:
                 username = request.session['username']
-                user = User.objects.get(username=username)
-                application = IdApplication.objects.create(
-                    user=user,
-                    application_type=form.cleaned_data['application_type'],
-                    passport=form.cleaned_data['passport']
-                )
-                application.save()
-                return HttpResponse('application was successful')
-            except KeyError,  e:
+                regNo = request.session['regNo']
+                payment = Payment.objects.get(regNo=regNo)
+                status = str(payment.status).lower()
+                if status == 'success':
+
+                    user = User.objects.get(username=username)
+
+                    application = IdApplication.objects.create(
+                        user=user,
+                        application_type=form.cleaned_data['application_type'],
+                        passport=form.cleaned_data['passport']
+                    )
+                    application.save()
+                    return HttpResponse('application was successful')
+                else:
+                    return HttpResponseRedirect('/make-payment/')
+            except KeyError, e:
                 pass
     else:
         form = ApplyIdForm()
     return render(request, 'accounts/apply_id.html', {'form': form, })
+
+
+
 
 
 
