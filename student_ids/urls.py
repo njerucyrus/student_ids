@@ -22,6 +22,7 @@ urlpatterns = [
 
     url(r'^admin/', admin.site.urls),
     url(r'^', include('accounts.urls', namespace='account')),
+    url(r'^', include('payments.urls', namespace='payment')),
 
 ]
-admin.site.site_header = 'DKUT STUDENT ID ADMIN PANEL'
+admin.site.site_header = 'DeKUT STUDENT ID ADMIN PANEL'

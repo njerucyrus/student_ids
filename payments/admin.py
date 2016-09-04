@@ -17,7 +17,7 @@ admin.site.register(Payment, PaymentAdmin)
 
 
 class StudentIdFeeAdmin(admin.ModelAdmin):
-    list_display = ['id_fee']
+    list_display = ['academic_year', 'id_fee']
 
     class Meta:
         model = StudentIdFee

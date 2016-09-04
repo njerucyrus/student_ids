@@ -14,7 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
+PROJECT_ROOT = os.path.realpath(os.path.dirname(__file__))
 
 
 # Quick-start development settings - unsuitable for production
@@ -57,7 +57,7 @@ ROOT_URLCONF = 'student_ids.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(PROJECT_PATH, 'accounts', 'templates'), ],
+        'DIRS': [os.path.join(PROJECT_ROOT, 'templates'), ],
 
         'APP_DIRS': True,
         'OPTIONS': {
@@ -126,3 +126,16 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+# mobile payment credentials
+
+apiKey = '412d699e6dda8c6502885fb3dc075c99d2f199ea68b7d01d06fb9c4352858c54'
+
+username = 'njerucyrus'
+
+productName = 'DeKUT Student ID'
+
+currencyCode = "KES"
+
+metadata = {"agentId": "654", "Company": "Hudutech"}
+

@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 
 def index(request):
-    return render(request, 'index.html', {})
+    return render(request, 'accounts/index.html', {})
 
 
 def user_login(request):
@@ -15,10 +15,11 @@ def user_login(request):
             cd = form.cleaned_data
             user = authenticate(username=cd['username'], password=cd['password'])
             if user is not None:
-                request.session['username'] = cd['username']
-
                 if user.is_active:
-
+                    request.session['username'] = cd['username']
+                    user_instance = User.objects.get(username=cd['username'])
+                    profile = Profile.objects.get(user=user_instance)
+                    request.session['regNo'] = str(profile.regNo)
                     login(request, user)
                     return HttpResponseRedirect('/index/')
                 else:
@@ -30,18 +31,19 @@ def user_login(request):
                 return render(request, 'login.html', {'message': message, })
     else:
         form = LoginForm()
-    return render(request, 'login.html', {'form': form, })
+    return render(request, 'accounts/login.html', {'form': form, })
 
 
 def user_logout(request):
     logout(request)
     try:
         del request.session['username']
+        del request.session['regNo']
         request.session.modified = True
         return render(request, 'logout_then_login.html', {})
     except KeyError:
         pass
-    return render(request, 'logout_then_login.html', {})
+    return render(request, 'accounts/logout_then_login.html', {})
 
 
 def create_account(request):
@@ -78,7 +80,7 @@ def create_account(request):
     else:
         user_form = UserRegistrationForm()
         profile_form = StudentProfileForm()
-    return render(request, 'create_account.html', {'user_form': user_form,
+    return render(request, 'accounts/create_account.html', {'user_form': user_form,
                                                    'profile_form': profile_form,
                                                    })
 
@@ -101,7 +103,7 @@ def apply_id(request):
                 pass
     else:
         form = ApplyIdForm()
-    return render(request, 'apply_id.html', {'form': form, })
+    return render(request, 'accounts/apply_id.html', {'form': form, })
 
 
 
