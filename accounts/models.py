@@ -42,7 +42,7 @@ class Profile(models.Model):
 
 class IdApplication(models.Model):
     user = models.OneToOneField(User)
-    passport = models.ImageField(upload_to="img/passports")
+    passport = models.ImageField("Passport Photo ", upload_to="img/passports")
 
     APPL_TYPE = (
         ('F', 'First Time'),

@@ -22,7 +22,7 @@ def user_login(request):
                     profile = Profile.objects.get(user=user_instance)
                     request.session['regNo'] = str(profile.regNo)
                     login(request, user)
-                    return HttpResponseRedirect('/index/')
+                    return HttpResponseRedirect('/')
                 else:
 
                     message = "Your Account has been disabled. Contact Admin"
