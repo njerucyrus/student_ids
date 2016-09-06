@@ -6,8 +6,10 @@
 <div class="col col-md-3"></div>
     <div class="col col-md-6">
     <form action="" method="post">
-        {{ profile_form | crispy}}
-        {{ user_form | crispy}}
+        <table class = "table table-inverse">
+        {{ profile_form.as_table}}
+        {{ user_form.as_table  }}
+        </table>
         {% csrf_token %}
         <input type="submit" value="create account" class="col col-md-12 btn btn-success">
     </form>
