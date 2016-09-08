@@ -51,10 +51,19 @@ class IdApplication(models.Model):
 
     application_type = models.CharField(max_length=32, choices=APPL_TYPE, default=APPL_TYPE[0][0])
     paid = models.BooleanField(default=False)
+    status = models.CharField(max_length=20, default="Pending")
     date_applied = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
         return str(self.user)
+
+
+class ContactMessage(models.Model):
+    phoneNumber = models.CharField(max_length=13)
+    message = models.TextField(max_length=200)
+
+    def __unicode__(self):
+        return self.phoneNumber
 
 
 

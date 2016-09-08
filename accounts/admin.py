@@ -41,3 +41,11 @@ class CourseAdmin(admin.ModelAdmin):
         model = Course
 admin.site.register(Course, CourseAdmin)
 
+
+class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = ['phoneNumber', 'message']
+
+    class Meta:
+        model = ContactMessage
+admin.site.register(ContactMessage, ContactMessageAdmin)
+

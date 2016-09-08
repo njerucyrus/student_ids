@@ -4,8 +4,6 @@ from django.contrib.auth.decorators import login_required
 from payments.models import Payment, StudentIdFee
 from student_ids.settings import apiKey, username, currencyCode, productName, metadata
 from AfricasTalkingGateway import AfricasTalkingGateway, AfricasTalkingGatewayException
-import json
-
 
 @login_required(login_url='/login/')
 def make_payment(request):

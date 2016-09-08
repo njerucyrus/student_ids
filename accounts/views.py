@@ -1,4 +1,8 @@
-from django.shortcuts import render, HttpResponse, HttpResponseRedirect
+from django.shortcuts import (render,
+                              HttpResponse,
+                              HttpResponseRedirect,
+                              get_object_or_404,
+)
 from accounts.forms import  *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -22,14 +26,15 @@ def user_login(request):
                     profile = Profile.objects.get(user=user_instance)
                     request.session['regNo'] = str(profile.regNo)
                     login(request, user)
-                    return HttpResponseRedirect('/')
+                    return HttpResponseRedirect('/index/')
                 else:
 
                     message = "Your Account has been disabled. Contact Admin"
-                    return render(request, 'login.html', {'message': message, })
+                    form = LoginForm()
+                    return render(request, 'accounts/login.html', {'form': form, 'message': message, })
             else:
-                message = 'Wrong username or username'
-                return render(request, 'login.html', {'message': message, })
+                message = 'Wrong username or password'
+                return render(request, 'accounts/login.html', {'form': form, 'message': message, })
     else:
         form = LoginForm()
     return render(request, 'accounts/login.html', {'form': form, })
@@ -85,35 +90,113 @@ def create_account(request):
                                                    'profile_form': profile_form,
                                                    })
 
-@login_required(login_url="/login/")
-def apply_id(request):
+# @login_required(login_url="/")
+# def apply_id(request):
+#
+#     if request.method == 'POST':
+#         form = ApplyIdForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             try:
+#                 username = request.session['username']
+#                 regNo = request.session['regNo']
+#                 payment = Payment.objects.get(regNo=regNo)
+#                 status = str(payment.status).lower()
+#                 if status == 'success':
+#
+#                     user = User.objects.get(username=username)
+#
+#                     application = IdApplication.objects.create(
+#                         user=user,
+#                         application_type=form.cleaned_data['application_type'],
+#                         passport=form.cleaned_data['passport']
+#                     )
+#                     application.save()
+#                     return HttpResponse('application was successful')
+#                 else:
+#                     return HttpResponseRedirect('/make-payment/')
+#             except KeyError, e:
+#                 pass
+#     else:
+#         form = ApplyIdForm()
+#     return render(request, 'accounts/apply_id.html', {'form': form, })
 
+
+@login_required(login_url='/')
+def view_application_status(request):
+    try:
+        username = request.session['username']
+        user = User.objects.get(username=username)
+
+        apl = IdApplication.objects.filter(user=user)
+        if apl is not None:
+            return render(request, 'accounts/application.html', {'apl': apl, })
+        else:
+            message = "You do not have any ID application made."
+            return render(request, 'accounts/application.html', {'message': message, })
+    except(KeyError, User.DoesNotExist) as e:
+        pass
+        return render(request, 'accounts/application.html', {'message': message, })
+
+
+def contact_support(request):
     if request.method == 'POST':
-        form = ApplyIdForm(request.POST, request.FILES)
+        form = ContactSupportForm(request.POST)
         if form.is_valid():
-            try:
-                username = request.session['username']
-                regNo = request.session['regNo']
-                payment = Payment.objects.get(regNo=regNo)
-                status = str(payment.status).lower()
-                if status == 'success':
+            form.save()
+            message = "Your message was sent successfully"
+            return render(request, 'accounts/contact_support.html', {'massage': message, })
+    else:
+        form = ContactSupportForm()
+    return render(request, 'accounts/contact_support.html', {'form': form, })
 
+
+def about(request):
+    return render(request, 'accounts/about.html', {})
+
+
+@login_required(login_url='/')
+def apply_id(request):
+    try:
+        username = request.session['username']
+        regNo = request.session['regNo']
+        payment = Payment.objects.get(regNo=regNo)
+        status = str(payment.status).lower()
+
+        if status == 'success':
+
+            if request.method == 'POST':
+                form = ApplyIdForm(request.POST, request.FILES)
+                if form.is_valid():
                     user = User.objects.get(username=username)
+                    cd = form.cleaned_data
+                    application_type = cd['application_type']
+                    passport = cd['passport']
 
                     application = IdApplication.objects.create(
                         user=user,
-                        application_type=form.cleaned_data['application_type'],
-                        passport=form.cleaned_data['passport']
+                        application_type=application_type,
+                        passport=passport
                     )
                     application.save()
                     return HttpResponse('application was successful')
                 else:
                     return HttpResponseRedirect('/make-payment/')
-            except KeyError, e:
-                pass
-    else:
-        form = ApplyIdForm()
-    return render(request, 'accounts/apply_id.html', {'form': form, })
+            else:
+                form = ApplyIdForm()
+            return render(request, 'accounts/apply_id.html', {'form': form, })
+
+        return HttpResponseRedirect('/make-payment/')
+
+    except Exception, e:
+
+        return HttpResponseRedirect('/make-payment/')
+
+
+
+
+
+
+
 
 
 

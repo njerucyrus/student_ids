@@ -38,3 +38,9 @@ class ApplyIdForm(forms.ModelForm):
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=32)
     password = forms.CharField(max_length=128, widget=forms.PasswordInput)
+
+
+class ContactSupportForm(forms.ModelForm):
+    class Meta:
+        model = ContactMessage
+        fields = '__all__'
