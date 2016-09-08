@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+{% if user.is_authenticated %}
+    <h4><p>Welcome {{ request.user }}</p></h4>
+{% else %}
+ <h4><p>Welcome you need to login to access be able to apply for your id</p></h4>
+    <p>Click here <a href="{% url 'account:login' %}" >login</a></p>
+{% endif %}
+
+{% endblock %}

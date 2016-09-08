@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <did class="row">
+
+    <div class="col col-md-3"></div>
+    <div class="col col-md-6">
+    <h3><strong>Fill in the details to make payment for your Student ID Card.</strong></h3>
+    <form action="" method="post">
+    {{ payment_form | crispy}}
+    {% csrf_token %}
+    <input type="submit" value="Make Payment" class="col col-col-md-12 btn btn-success">
+    </form>
+     </div>
+    </did>
+{% endblock %}

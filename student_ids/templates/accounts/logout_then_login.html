@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="content">
+    <div class="row">
+        <div class="div-login-logout col col-md-6">
+
+           <p> You are now logged out <a href="{% url 'account:login' %}"> login again</a> </p>
+
+        </div>
+    </div>
+
+    </div>
+
+{% endblock %}

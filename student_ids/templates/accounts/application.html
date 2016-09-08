@@ -1,0 +1,15 @@
+{% extends  'base.html' %}
+{% block content %}
+    <div class="container">
+    <div class="col col-md-12">
+        {% if apl %}
+        <p> Dear {{ request.user }} Your application status is {{ apl.status }}</p>
+        {% else %}
+           <p> Dear {{ request.user }} You have not made any id application</p>
+            &nbsp;&nbsp;
+            if you wish to apply click <a href="{% url 'account:apply' %}">here</a>
+        {% endif %}
+    </div>
+    </div>
+
+{% endblock %}
